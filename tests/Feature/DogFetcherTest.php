@@ -2,12 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\DogImage;
 use App\Libraries\DogFetcher;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Exception;
 use Mockery;

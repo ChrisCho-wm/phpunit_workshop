@@ -18,10 +18,10 @@ class DogFetcher
     {
         $image = $this->getDogImage($breedName);
 
-        $dogImage = new DogImage;
-        $dogImage->image_url = $image['message'];
-        $dogImage->breed_name = $breedName;
-        $dogImage->save();
+        DogImage::create([
+            'image_url' => $image['message'],
+            'breed_name' => $breedName,
+        ]);
     }
 
     protected function getDogImage($breedName)

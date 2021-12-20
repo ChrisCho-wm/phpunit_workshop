@@ -1,71 +1,71 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# UnitTest workshop
+## Workshop目標
+1. 瞭解 Mockery 用法
+2. 使用 Mockery, 產生一個 Mock 物件
+3. 解讀程式覆蓋率
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## 內容
+- DogFetcher 程式進行範例說明 (30mins)
+- 說明需要測試的類別 (5mins)
+- 分組進行開發 (45mins)
+- 成果展示 (30mins)
+- Q & A (10mins)
 
-## About Laravel
+## 實作流程
+- 提供3個題目練習
+- 兩個人一組, 選擇一個題目進行練習, 各自實作, 可以討論
+- 若完成, 可以練習尚未完成的題目
+- 解析測試撰寫結果
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 題目
+- 範例 repository
+  - git@github.com:ChrisCho-wm/phpunit_workshop.git
+- 初始化步驟
+  - composer install
+  - 建立 .env.testing, 設定 DB 連線, sqlite, MySQL 均可
+  - 安裝 xdebug (測試覆蓋率)
+  - php artisan migrate:install
+  - php artisan migrate
+- 題目內容
+  - 書本ISBN API
+    - 測試類別 App\Libraries\BookFetcher (測試回傳資料於 getBook function 中)
+    - 測試1.確認有書本資料時, Table 寫入正確
+    - 測試2.確認無書本資料時, 拋出 Exception
+    - 運用的功能
+    ```
+        $mockClient->shouldReceive($methodName)->andReturn($response);
+        $this->expectException($className);
+        $this->expectExceptionCode($code);
+        $this->expectExceptionMessage($message);
+        $this->assertDatabaseHas
+    ```
+  - 頂級域名 API
+    - 測試類別 App\Libraries\TldFetcher (測試回傳資料於 tests/Feature/WorkShop/tw.json,cn.json,us.json)
+    - 測試1.有資料時,回傳正確篩選後的資料 (使用 @dataProvider 進行三組資料測試)
+    - 測試2.確認無Tld資料時, 拋出 Exception
+    - 運用的功能
+    ```
+        @dataProvider
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+        $mockClient->shouldReceive($methodName)->andReturn($response);
+        $this->expectException($className);
+        $this->expectExceptionCode($code);
+        $this->expectExceptionMessage($message);
+        $this->assertEquals
+    ```
+  - 虛擬貨幣 API
+    - 測試類別 App\Libraries\CryptoFetcher (測試回傳資料於 getGlobal, getBTC function 中)
+    - 測試. 使用不同的資料測試回傳訊息是否正確
+    - 運用的功能
+    ```
+        @dataProvider
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost you and your team's skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+        $mockClient->shouldReceive($methodName)->withArgs($arg1, $arg2...)->andReturn($response);
+        $this->assertEquals
+    ```
+- 測試指令
+  ```
+    php artisan make:test {FeatureOrClassName}Test   // 建立 test
+    ./vendor/bin/phpunit tests/{FeatureOrClassName}Test(.php) // 執行測試
+    ./vendor/bin/phpunit tests/{FeatureOrClassName}Test(.php) --coverage-html report // 執行測試, 並建立測試覆蓋率報告
+  ```

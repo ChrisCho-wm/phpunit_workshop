@@ -1,0 +1,30 @@
+{
+    "zone": "tw",
+    "type": "ccTLD",
+    "includes": [
+      "ebiz.tw",
+      "club.tw",
+      "mil.tw",
+      "tw",
+      "com.tw",
+      "網路.tw",
+      "net.tw",
+      "game.tw",
+      "商業.tw",
+      "edu.tw",
+      "org.tw",
+      "idv.tw",
+      "組織.tw",
+      "gov.tw"
+    ],
+    "in_bundles": [
+      "bundle_all_zones",
+      "bundle_asia-bundle",
+      "bundle_cctld",
+      "bundle_not_official"
+    ],
+    "description": [
+      "tw : https://en.wikipedia.org/wiki/.tw"
+    ]
+  }
+  
