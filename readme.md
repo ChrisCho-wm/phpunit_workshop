@@ -61,6 +61,7 @@
         @dataProvider
 
         $mockClient->shouldReceive($methodName)->withArgs($arg1, $arg2...)->andReturn($response);
+        $mockClient->shouldReceive($methodName)->withSomeOfArgs($arg1, $arg2...)->andReturn($response);
         $this->assertEquals
     ```
 - 測試指令
@@ -69,3 +70,8 @@
     ./vendor/bin/phpunit tests/{FeatureOrClassName}Test(.php) // 執行測試
     ./vendor/bin/phpunit tests/{FeatureOrClassName}Test(.php) --coverage-html report // 執行測試, 並建立測試覆蓋率報告
   ```
+## 重點整理
+- Workshop 重點整理
+1. mock 步驟一定要確實執行, 若會忘記, 請使用 snippet, 快速新增
+2. dataProvider function 執行時間比 setup function 還前面, 故無法在 dataProvider function 內使用 laravel 方法, 建議使用純值或是使用 php 原生方法讀取外部資料
+3. 若同時間需要 mock 不同的 API, 可以使用 withArgs 或 withSomeOfArgs 或是 andReturnUsing
