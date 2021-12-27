@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Workshop;
+namespace Tests\Feature\Workshop\Session1;
 
 use App\Libraries\CryptoFetcher;
 use GuzzleHttp\Client;
