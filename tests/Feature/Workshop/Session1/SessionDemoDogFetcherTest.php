@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Workshop\Session1;
 
 use App\Libraries\DogFetcher;
 use GuzzleHttp\Client;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Exception;
 use Mockery;
 
-class DogFetcherTest extends TestCase
+class SessionDemoDogFetcherTest extends TestCase
 {
     use DatabaseTransactions;
 

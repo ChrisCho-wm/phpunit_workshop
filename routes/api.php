@@ -16,3 +16,23 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Demo
+Route::group(['prefix' => 'dogs', 'middleware' => 'auth:api'], function () {
+    Route::post('uploadImage', 'DogController@uploadDogImage');
+    Route::post('getMyFavoriteDog', 'DogController@getMyFavoriteDog');
+    Route::post('getDogDescription', 'DogController@getDogDescription');
+});
+
+// Session2
+Route::group(['prefix' => 'cats', 'middleware' => 'auth:api'], function () {
+    Route::post('uploadImage', 'CatController@uploadCatImage');
+    Route::post('getMyFavoriteCat', 'CatController@getMyFavoriteCat');
+    Route::post('getCatDescription', 'CatController@getCatDescription');
+});
+
+
+// Session2
+// 1
+// 2
+// 3

@@ -37,9 +37,9 @@ class TldFetcher
 
         /*
         status: 200
-            tests/Feature/WorkShop/tw.json
-            tests/Feature/WorkShop/cn.json
-            tests/Feature/WorkShop/us.json
+            tests/Feature/Workshop/tw.json
+            tests/Feature/Workshop/cn.json
+            tests/Feature/Workshop/us.json
         */
 
     }
