@@ -12,46 +12,50 @@
     - api/dogs/getMyFavoriteDog
     - api/dogs/getRelativeDog
 - ExampleTest
-    - [SessionDemoDogApiTest](./../tests/Feature/Workshop/Session2/SessionDemoDogApiTest.php) 
+    - [SessionDemoDogApiTest](./../tests/Feature/Workshop/Session2/SessionDemoDogApiTest.php)
 
 ## 題目
 - 題目內容
-  - 書本ISBN API
-    - 測試類別 App\Libraries\BookFetcher (測試回傳資料於 getBook function 中)
-    - 測試1.確認有書本資料時, Table 寫入正確
-    - 測試2.確認無書本資料時, 拋出 Exception
+  - 上傳 Cat 圖片
+    - 測試圖片位於 tests/Feature/Workshop/Session2 cat.jpeg
+    - 測試流程
+      - 上傳 cat.jpeg, 並設定寬高為 100x100
+      - 驗證回傳格式
+      - 驗證 storage 是否有正確將圖片儲存
+      - 測試完成請刪除產生的資料夾
     - 運用的功能
     ```
-        $mockClient->shouldReceive($methodName)->andReturn($response);
-        $this->expectException($className);
-        $this->expectExceptionCode($code);
-        $this->expectExceptionMessage($message);
-        $this->assertDatabaseHas
+        Carbon::setTestNow, Carbon::create
+        $this->beforeApplicationDestroyed()
+        UploadedFile::fake()->image
+        assertExactJson
+        Storage::assertExists
     ```
-  - 頂級域名 API
-    - 測試類別 App\Libraries\TldFetcher (測試回傳資料於 tests/Feature/Workshop/tw.json,cn.json,us.json)
-    - 測試1.有資料時,回傳正確篩選後的資料 (使用 @dataProvider 進行三組資料測試)
-    - 測試2.確認無Tld資料時, 拋出 Exception
+  - 驗證登入使用者喜好-1
+    - 測試流程
+      - 驗證回傳格式
+      - 驗證 session 是否有正確寫入資料
+      - 請使用 dataProvider 傳入資料
+      - 測試完成請刪除產生的資料夾
     - 運用的功能
     ```
-        @dataProvider
-
-        $mockClient->shouldReceive($methodName)->andReturn($response);
-        $this->expectException($className);
-        $this->expectExceptionCode($code);
-        $this->expectExceptionMessage($message);
-        $this->assertEquals
+        Carbon::setTestNow, Carbon::create
+        actingAs
+        assertExactJson
+        assertSessionHas
     ```
-  - 虛擬貨幣 API
-    - 測試類別 App\Libraries\CryptoFetcher (測試回傳資料於 getGlobal, getBTC function 中)
-    - 測試. 使用不同的資料測試回傳訊息是否正確
+  - 驗證登入使用者喜好-2
+    - 測試流程
+      - 驗證回傳格式
+      - 驗證 cookie 是否有正確寫入資料
+      - 請使用 dataProvider 傳入資料
+      - 測試完成請刪除產生的資料夾
     - 運用的功能
     ```
-        @dataProvider
-
-        $mockClient->shouldReceive($methodName)->withArgs($arg1, $arg2...)->andReturn($response);
-        $mockClient->shouldReceive($methodName)->withSomeOfArgs($arg1, $arg2...)->andReturn($response);
-        $this->assertEquals
+        Carbon::setTestNow, Carbon::create
+        actingAs
+        assertExactJson
+        assertCookie
     ```
 
 ## 重點整理
@@ -59,5 +63,6 @@
 1. 若程式內部有使用 Carbon now 的方法, 則可以使用 Carbon::setTestNow 進行調整, 降低判斷時間難度
 2. 若現有系統使用原生方法 date, 則應替換為 now(), 以便測試
 3. 新增的檔案務必於測試結束後刪除, 降低測試之間互相影響
-4. 於 Larave Feature 測試時需要 teardown 且需使用 Laravel 功能, 則必須使用 $this->beforeApplicationDestroyed 進行 callback 註冊
+4. 於 Laravel Feature 測試時需要 teardown 且需使用 Laravel 功能, 則必須使用 $this->beforeApplicationDestroyed 進行 callback 註冊
 5. cookie 驗證時, 預設為加密, 需要傳入第三參數進行切換處理
+6. 若有測試時不易操作的 middleware, 可使用 trait WithoutMiddleware 移除

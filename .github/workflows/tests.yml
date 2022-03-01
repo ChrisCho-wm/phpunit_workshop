@@ -1,0 +1,79 @@
+name: tests
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  linux_tests:
+    runs-on: ubuntu-20.04
+
+    services:
+      mysql:
+        image: mysql:8
+        ports:
+          - 33306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_USER=phpunit_user -e MYSQL_PASSWORD=phpunit_pass -e MYSQL_DATABASE=phpunit_workshop --entrypoint sh mysql:8 -c "exec docker-entrypoint.sh mysqld --default-authentication-plugin=mysql_native_password"
+      redis:
+        image: redis:5.0
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: ['7.3']
+        stability: [prefer-stable]
+
+    name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, memcached
+          tools: composer:v2
+          coverage: xdebug2
+
+      # - name: Install SSH key of github
+      #   uses: shimataro/ssh-key-action@v2
+      #   with:
+      #     key: ${{ secrets.CI_SECRET }}
+      #     name: id_rsa-github
+      #     known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      #     config: |
+      #       Host mmrm_common.wishmobile.github
+      #         HostName github.com
+      #         User git
+      #         IdentityFile ~/.ssh/id_rsa-github
+
+      - name: Install dependencies
+        uses: nick-invision/retry@v1
+        with:
+          timeout_minutes: 5
+          max_attempts: 5
+          command: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
+
+      # https://laravel-news.com/laravel-github-actions
+      - name: Prepare Laravel Application
+        run: |
+          cp .env.ci .env
+          php artisan key:generate
+          php artisan migrate:install
+          php artisan migrate
+      - name: Execute tests
+        run: |
+          vendor/bin/phpunit --verbose --coverage-html=reports
+          tar -zvcf reports.tar.gz reports
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: reports.tar.gz
